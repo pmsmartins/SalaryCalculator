@@ -24,16 +24,19 @@ interface ChartsSectionProps {
 }
 
 export const ChartsSection = ({ comparisonData, hourlyWageData, showStockOptions }: ChartsSectionProps) => (
-  <>
-    <div className="h-64">
-      <h4 className="text-sm font-medium mb-2">Total Compensation Comparison</h4>
+  <div className="space-y-12">
+    <div className="h-72">
+      <h4 className="text-sm font-medium mb-4 dark:text-gray-100">Total Compensation Comparison</h4>
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={comparisonData}>
+        <BarChart 
+          data={comparisonData}
+          margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+        >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
-          <Legend />
+          <Legend wrapperStyle={{ paddingTop: '20px' }} />
           <Bar dataKey="Base" fill="#8884d8" stackId="a" name="Base Salary" />
           {showStockOptions && (
             <Bar dataKey="Stock" fill="#82ca9d" stackId="a" name="Stock Value" />
@@ -42,18 +45,22 @@ export const ChartsSection = ({ comparisonData, hourlyWageData, showStockOptions
         </BarChart>
       </ResponsiveContainer>
     </div>
-    <div className="h-64">
-      <h4 className="text-sm font-medium mb-2">Hourly Wage Comparison</h4>
+
+    <div className="h-72">
+      <h4 className="text-sm font-medium mb-4 dark:text-gray-100">Hourly Wage Comparison</h4>
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={hourlyWageData}>
+        <BarChart 
+          data={hourlyWageData}
+          margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+        >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
-          <Legend />
+          <Legend wrapperStyle={{ paddingTop: '20px' }} />
           <Bar dataKey="Hourly Wage" fill="#8884d8" name="Hourly Wage" />
         </BarChart>
       </ResponsiveContainer>
     </div>
-  </>
+  </div>
 ); 
