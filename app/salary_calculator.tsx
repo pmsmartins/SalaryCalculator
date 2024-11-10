@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { InputSection } from '@/components/salary-calculator/input-section';
-import { ResultsSection } from '@/components/salary-calculator/results-section';
 import { ChartsSection } from '@/components/salary-calculator/charts-section';
+import { ResultsSection } from '@/components/salary-calculator/results-section';
 
 const SalaryCalculator = () => {
   const [showStockOptions, setShowStockOptions] = useState(false);
@@ -132,6 +132,7 @@ const SalaryCalculator = () => {
               <ResultsSection 
                 results={results}
                 showStockOptions={showStockOptions}
+                inputs={inputs}
               />
               <ChartsSection 
                 comparisonData={comparisonData}

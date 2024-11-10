@@ -1,3 +1,5 @@
+import { calculateAvailableTime } from "@/utils/calculations";
+
 interface ResultsSectionProps {
   results: {
     newSalary: number;
@@ -10,6 +12,10 @@ interface ResultsSectionProps {
     totalCompAfter: number;
   };
   showStockOptions: boolean;
+  inputs: {
+    currentHours: number;
+    newHours: number;
+  };
 }
 
 const IncreaseCard = ({ 
@@ -47,9 +53,51 @@ const IncreaseCard = ({
   );
 };
 
-export const ResultsSection = ({ results, showStockOptions }: ResultsSectionProps) => (
+const TimeAvailabilityCard = ({ currentHours, newHours }: { currentHours: number; newHours: number }) => {
+  const currentTime = calculateAvailableTime(currentHours);
+  const newTime = calculateAvailableTime(newHours);
+  const hoursDifference = newTime.weeklyAvailableHours - currentTime.weeklyAvailableHours;
+  
+  return (
+    <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-3 mb-2 dark:bg-indigo-950 dark:border-indigo-900 dark:text-indigo-100">
+      <div className="text-sm font-medium">Available Free Time</div>
+      <div className="grid grid-cols-2 gap-4 mt-2">
+        <div>
+          <div className="text-xs text-indigo-600 dark:text-indigo-300">Current</div>
+          <div className="font-semibold">
+            {currentTime.dailyAvailableHours.toFixed(1)} hours/day
+          </div>
+          <div className="text-sm">
+            {currentTime.weeklyAvailableHours.toFixed(1)} hours/week
+          </div>
+        </div>
+        <div>
+          <div className="text-xs text-indigo-600 dark:text-indigo-300">New</div>
+          <div className="font-semibold">
+            {newTime.dailyAvailableHours.toFixed(1)} hours/day
+          </div>
+          <div className="text-sm">
+            {newTime.weeklyAvailableHours.toFixed(1)} hours/week
+          </div>
+        </div>
+      </div>
+      {hoursDifference > 0 && (
+        <div className="mt-2 text-sm text-indigo-700 dark:text-indigo-200 font-medium">
+          +{hoursDifference.toFixed(1)} extra hours per week for personal projects & family
+        </div>
+      )}
+    </div>
+  );
+};
+
+export const ResultsSection = ({ results, showStockOptions, inputs }: ResultsSectionProps) => (
   <div className="p-4 bg-gray-50 dark:bg-gray-900 rounded">
     <h3 className="font-semibold mb-4 dark:text-gray-100">Results</h3>
+    
+    <TimeAvailabilityCard 
+      currentHours={inputs.currentHours}
+      newHours={inputs.newHours}
+    />
     
     <IncreaseCard 
       label="New Salary"
